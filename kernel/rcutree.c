@@ -335,7 +335,7 @@ static void rcu_eqs_enter_common(struct rcu_dynticks *rdtp, long long oldval,
 				bool user)
 {
 	trace_rcu_dyntick("Start", oldval, 0);
-	if (!is_idle_task(current) && !user) {
+	if (!user && !is_idle_task(current)) {
 		struct task_struct *idle = idle_task(smp_processor_id());
 
 		trace_rcu_dyntick("Error on entry: not idle task", oldval, 0);
@@ -399,7 +399,11 @@ static void rcu_eqs_enter(bool user)
  */
 void rcu_idle_enter(void)
 {
-	rcu_eqs_enter(0);
+	unsigned long flags;
+
+	local_irq_save(flags);
+	rcu_eqs_enter(false);
+	local_irq_restore(flags);
 }
 EXPORT_SYMBOL_GPL(rcu_idle_enter);
 
@@ -430,7 +434,7 @@ void rcu_user_enter(void)
 	rdtp = &__get_cpu_var(rcu_dynticks);
 	if (!rdtp->ignore_user_qs && !rdtp->in_user) {
 		rdtp->in_user = true;
-		rcu_eqs_enter(1);
+		rcu_eqs_enter(true);
 	}
 	local_irq_restore(flags);
 }
@@ -487,7 +491,7 @@ void rcu_irq_exit(void)
 	if (rdtp->dynticks_nesting)
 		trace_rcu_dyntick("--=", oldval, rdtp->dynticks_nesting);
 	else
-		rcu_eqs_enter_common(rdtp, oldval, 1);
+		rcu_eqs_enter_common(rdtp, oldval, true);
 	local_irq_restore(flags);
 }
 
@@ -508,7 +512,7 @@ static void rcu_eqs_exit_common(struct rcu_dynticks *rdtp, long long oldval,
 	WARN_ON_ONCE(!(atomic_read(&rdtp->dynticks) & 0x1));
 	rcu_cleanup_after_idle(smp_processor_id());
 	trace_rcu_dyntick("End", oldval, rdtp->dynticks_nesting);
-	if (!is_idle_task(current) && !user) {
+	if (!user && !is_idle_task(current)) {
 		struct task_struct *idle = idle_task(smp_processor_id());
 
 		trace_rcu_dyntick("Error on exit: not idle task",
@@ -555,7 +559,11 @@ static void rcu_eqs_exit(bool user)
  */
 void rcu_idle_exit(void)
 {
-	rcu_eqs_exit(0);
+	unsigned long flags;
+
+	local_irq_save(flags);
+	rcu_eqs_exit(false);
+	local_irq_restore(flags);
 }
 EXPORT_SYMBOL_GPL(rcu_idle_exit);
 
@@ -578,7 +586,13 @@ void rcu_user_exit(void)
 	if (in_interrupt())
 		return;
 
-	rcu_eqs_exit(1);
+	local_irq_save(flags);
+	rdtp = &__get_cpu_var(rcu_dynticks);
+	if (rdtp->in_user) {
+		rdtp->in_user = false;
+		rcu_eqs_exit(true);
+	}
+	local_irq_restore(flags);
 }
 
 /**
@@ -636,7 +650,7 @@ void rcu_irq_enter(void)
 	if (oldval)
 		trace_rcu_dyntick("++=", oldval, rdtp->dynticks_nesting);
 	else
-		rcu_eqs_exit_common(rdtp, oldval, 1);
+		rcu_eqs_exit_common(rdtp, oldval, true);
 	local_irq_restore(flags);
 }
 
