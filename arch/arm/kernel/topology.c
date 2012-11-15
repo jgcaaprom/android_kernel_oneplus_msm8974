@@ -197,55 +197,6 @@ static inline void parse_dt_topology(void) {}
 static inline void update_cpu_power(unsigned int cpuid, unsigned int mpidr) {}
 #endif
 
-
-/*
- * cpu topology management
- */
-
-#define MPIDR_SMP_BITMASK (0x3 << 30)
-#define MPIDR_SMP_VALUE (0x2 << 30)
-
-		/* Save max capacity of the system */
-		if (capacity > max_capacity)
-			max_capacity = capacity;
-
-		cpu_capacity(cpu) = capacity;
-	}
-
-	/* If min and max capacities are equals, we bypass the update of the
-	 * cpu_scale because all CPUs have the same capacity. Otherwise, we
-	 * compute a middle_capacity factor that will ensure that the capacity
-	 * of an 'average' CPU of the system will be as close as possible to
-	 * SCHED_POWER_SCALE, which is the default value, but with the
-	 * constraint explained near table_efficiency[].
-	 */
-	if (4*max_capacity < (3*(max_capacity + min_capacity)))
-		middle_capacity = (min_capacity + max_capacity)
-				>> (SCHED_POWER_SHIFT+1);
-	else
-		middle_capacity = ((max_capacity / 3)
-				>> (SCHED_POWER_SHIFT-1)) + 1;
-
-}
-
-/*
- * Look for a customed capacity of a CPU in the cpu_capacity table during the
- * boot. The update of all CPUs is in O(n^2) for heteregeneous system but the
- * function returns directly for SMP system.
- */
-#define MPIDR_HWID_BITMASK 0xFFFFFF
-
-	set_power_scale(cpu, cpu_capacity(cpu) / middle_capacity);
-
-	printk(KERN_INFO "CPU%u: update cpu_power %lu\n",
-		cpu, arch_scale_freq_power(NULL, cpu));
-}
-
-#else
-static inline void parse_dt_topology(void) {}
-static inline void update_cpu_power(unsigned int cpuid) {}
-#endif
-
  /*
  * cpu topology table
  */
