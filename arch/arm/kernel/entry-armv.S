@@ -204,6 +204,7 @@ __dabt_svc:
 	tst	r5, #PSR_I_BIT
 	blne	trace_hardirqs_off
 #endif
+ THUMB(	ldr	r5, [sp, #S_PSR]	)	@ potentially updated CPSR
 	svc_exit r5				@ return from exception
  UNWIND(.fnend		)
 ENDPROC(__dabt_svc)
