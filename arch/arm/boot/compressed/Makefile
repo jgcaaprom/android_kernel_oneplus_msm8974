@@ -30,7 +30,11 @@ AFLAGS_decompress.o += -Wa,-march=armv7-a$(plus_sec)
 AFLAGS_decompress.o += -Wa,-mcpu=cortex-a15
 
 HEAD	= head.o
-OBJS	+= misc.o decompress.o
+OBJS	+= misc.o
+DECOMPRESS = decompress.o
+ifeq ($(CONFIG_KERNEL_LZ4),y)
+	CFLAGS_decompress.o := -Os
+endif
 FONTC	= $(srctree)/drivers/video/console/font_acorn_8x8.c
 
 # string library code (-Os is enforced to keep it much smaller)
@@ -122,7 +126,7 @@ endif
 targets       := vmlinux vmlinux.lds \
 		 piggy.$(suffix_y) piggy.$(suffix_y).o \
 		 lib1funcs.o lib1funcs.S ashldi3.o ashldi3.S bswapsdi2.o \
-		 bswapsdi2.S font.o font.c head.o misc.o $(OBJS)
+		 bswapsdi2.S font.o font.c head.o misc.o decompress.o $(OBJS)
 
 # Make sure files are removed during clean
 extra-y       += piggy.gzip piggy.lzo piggy.lzma piggy.xzkern piggy.lz4 \
@@ -199,7 +203,9 @@ fi
 
 $(obj)/vmlinux: $(obj)/vmlinux.lds $(obj)/$(HEAD) $(obj)/piggy.$(suffix_y).o \
 		$(addprefix $(obj)/, $(OBJS)) $(lib1funcs) $(ashldi3) \
-		$(bswapsdi2) FORCE
+		$(bswapsdi2) FORCE \
+                $(obj)/$(DECOMPRESS) $(obj)/piggy.$(suffix_y).o 
+
 	@$(check_for_multiple_zreladdr)
 	$(call if_changed,ld)
 	@$(check_for_bad_syms)
