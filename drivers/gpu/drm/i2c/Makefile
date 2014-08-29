@@ -10,5 +10,5 @@ obj-$(CONFIG_DRM_I2C_DUMMY) += dummy_drm_i2c_drv.o
 sil164-y := sil164_drv.o
 obj-$(CONFIG_DRM_I2C_SIL164) += sil164.o
 
-tda998x-y := tda998x_drv.o
+tda998x-y := tda998x_drv.o tda998x_codec.o
 obj-$(CONFIG_DRM_I2C_NXP_TDA998X) += tda998x.o
