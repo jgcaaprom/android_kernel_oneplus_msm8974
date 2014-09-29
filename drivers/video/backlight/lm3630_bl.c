@@ -201,13 +201,13 @@ static int lm3630_intr_config(struct lm3630_chip_data *pchip)
 	int ret;
 	struct lm3630_chip_data *pchip = lm3630_pchip;
 	pr_debug("%s: bl=%d\n", __func__,bl_level);
+
 #ifdef CONFIG_MACH_OPPO
 /* Xiaori.Yuan@Mobile Phone Software Dept.Driver, 2014/04/28  Add for add log for 14001 black screen */
 		if(pre_brightness == 0)
 			{pr_err("%s set brightness :  %d \n",__func__,bl_level);}
 		pre_brightness=bl_level;
 #endif /*VENDOR_EDIT*/
-	
 	if(!pchip){
 		dev_err(pchip->dev, "lm3630_bank_a_update_status pchip is null\n");
 		return -ENOMEM;
@@ -217,7 +217,6 @@ static int lm3630_intr_config(struct lm3630_chip_data *pchip)
         pr_err("%s YXQ pchip->regmap is NULL.\n", __func__);
         return bl_level;
     }
-	
 	/* brightness 0 means disable */
 	if (!bl_level) {
         ret = regmap_write(lm3630_pchip->regmap, REG_BRT_A, 0);
