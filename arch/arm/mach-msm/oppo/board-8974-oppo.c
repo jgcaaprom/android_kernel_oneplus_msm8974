@@ -58,6 +58,7 @@
 #include <asm/setup.h>
 #include <asm/memory.h>
 #include <linux/memblock.h>
+#endif
 #define OPPO_PERSISTENT_RAM_SIZE	(SZ_1M)
 #ifdef CONFIG_LCD_KCAL
 #include <mach/kcal.h>
