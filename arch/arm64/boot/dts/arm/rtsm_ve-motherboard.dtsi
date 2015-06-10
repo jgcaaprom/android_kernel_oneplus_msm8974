@@ -15,7 +15,7 @@
 		#interrupt-cells = <1>;
 		ranges;
 
-		flash@0,00000000 {
+		flash: flash@0,00000000 {
 			compatible = "arm,vexpress-flash", "cfi-flash";
 			reg = <0 0x00000000 0x04000000>,
 			      <4 0x00000000 0x04000000>;
@@ -78,7 +78,7 @@
 				assigned-clock-parents = <&v2m_refclk1mhz>, <&v2m_refclk1mhz>, <&v2m_refclk1mhz>, <&v2m_refclk1mhz>;
 			};
 
-			aaci@040000 {
+			aaci: aaci@040000 {
 				compatible = "arm,pl041", "arm,primecell";
 				reg = <0x040000 0x1000>;
 				interrupts = <11>;
@@ -86,7 +86,7 @@
 				clock-names = "apb_pclk";
 			};
 
-			mmci@050000 {
+			mmci: mmci@050000 {
 				compatible = "arm,pl180", "arm,primecell";
 				reg = <0x050000 0x1000>;
 				interrupts = <9 10>;
@@ -98,7 +98,7 @@
 				clock-names = "mclk", "apb_pclk";
 			};
 
-			kmi@060000 {
+			kmi0: kmi@060000 {
 				compatible = "arm,pl050", "arm,primecell";
 				reg = <0x060000 0x1000>;
 				interrupts = <12>;
@@ -106,7 +106,7 @@
 				clock-names = "KMIREFCLK", "apb_pclk";
 			};
 
-			kmi@070000 {
+			kmi1: kmi@070000 {
 				compatible = "arm,pl050", "arm,primecell";
 				reg = <0x070000 0x1000>;
 				interrupts = <13>;
@@ -178,7 +178,7 @@
 				clock-names = "apb_pclk";
 			};
 
-			clcd@1f0000 {
+			clcd: clcd@1f0000 {
 				compatible = "arm,pl111", "arm,primecell";
 				reg = <0x1f0000 0x1000>;
 				interrupt-names = "combined";
