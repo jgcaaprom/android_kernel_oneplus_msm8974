@@ -44,6 +44,11 @@
  *	This loads eight words starting from 'src' and stores them in 'dst'
  *	The 'abort' argument is used for fixup tables.
  *
+ * cpy8w dst src reg1 reg2 abort
+ *
+ *	This loads eight words starting from 'src' and stores them in 'dst'
+ *	The 'abort' argument is used for fixup tables.
+ *
  * ldr1b ptr reg cond abort
  *
  *	Similar to ldr1w, but it loads a byte and increments 'ptr' one byte.
