@@ -196,8 +196,12 @@ static void msm_slim_disconn_pipe_port(struct msm_slim_ctrl *dev, u8 pn)
 {
 	struct msm_slim_endp *endpoint = &dev->pipes[pn];
 	struct sps_register_event sps_event;
-	writel_relaxed(0, PGD_PORT(PGD_PORT_CFGn, (pn + dev->port_b),
+	u32 int_port = readl_relaxed(PGD_THIS_EE(PGD_PORT_INT_EN_EEn,
 					dev->ver));
+	writel_relaxed(0, PGD_PORT(PGD_PORT_CFGn, (endpoint->port_b),
+					dev->ver));
+	writel_relaxed((int_port & ~(1 << endpoint->port_b)),
+		PGD_THIS_EE(PGD_PORT_INT_EN_EEn, dev->ver));
 	/* Make sure port register is updated */
 	mb();
 	memset(&sps_event, 0, sizeof(sps_event));
