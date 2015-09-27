@@ -3,7 +3,6 @@
  *
  * Include file for the random number generator.
  */
-
 #ifndef _LINUX_RANDOM_H
 #define _LINUX_RANDOM_H
 
@@ -42,7 +41,7 @@ struct rand_pool_info {
 
 /* Exported functions */
 
-#ifdef __KERNEL__
+#include <linux/uapi_random.h>
 
 extern void add_device_randomness(const void *, unsigned int);
 extern void add_input_randomness(unsigned int type, unsigned int code,
@@ -67,7 +66,7 @@ void prandom_seed(u32 seed);
 void prandom_reseed_late(void);
 
 struct rnd_state {
-        __u32 s1, s2, s3, s4;
+	__u32 s1, s2, s3, s4;
 };
 
 u32 prandom_u32_state(struct rnd_state *state);
@@ -124,9 +123,29 @@ static inline int arch_get_random_int(unsigned int *v)
 {
 	return 0;
 }
+static inline int arch_has_random(void)
+{
+	return 0;
+}
+static inline int arch_get_random_seed_long(unsigned long *v)
+{
+	return 0;
+}
+static inline int arch_get_random_seed_int(unsigned int *v)
+{
+	return 0;
+}
+static inline int arch_has_random_seed(void)
+{
+	return 0;
+}
 #endif
 
-#endif /* __KERNEL___ */
+/* Pseudo random number generator from numerical recipes. */
+static inline u32 next_pseudo_random32(u32 seed)
+{
+	return seed * 1664525 + 1013904223;
+}
 
 #endif /* _LINUX_RANDOM_H */
 
