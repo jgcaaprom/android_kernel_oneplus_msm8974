@@ -242,9 +242,9 @@ EXPORT_SYMBOL_GPL(usb_gadget_set_state);
 
 static void usb_udc_connect_control(struct usb_udc *udc)
 {
-	if (udc->vbus)
+	if (udc->vbus) {
 		usb_gadget_connect(udc->gadget);
-	else
+	} else
 		usb_gadget_disconnect(udc->gadget);
 }
 

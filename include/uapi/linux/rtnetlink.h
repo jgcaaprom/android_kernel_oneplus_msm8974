@@ -308,6 +308,7 @@ enum rtattr_type_t {
 	RTA_VIA,
 	RTA_NEWDST,
 	RTA_PREF,
+	RTA_UID,
 	RTA_ENCAP_TYPE,
 	RTA_ENCAP,
 	__RTA_MAX

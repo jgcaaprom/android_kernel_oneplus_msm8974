@@ -1027,7 +1027,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 					   (flow_flags | FLOWI_FLAG_VRFSRC |
 					    FLOWI_FLAG_SKIP_NH_OIF),
 					   faddr, saddr, dport,
-					   inet->inet_sport);
+					   inet->inet_sport, sock_i_uid(sk));
 
 			rt = ip_route_output_flow(net, fl4, sk);
 			if (!IS_ERR(rt)) {
@@ -1039,7 +1039,8 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 		flowi4_init_output(fl4, ipc.oif, sk->sk_mark, tos,
 				   RT_SCOPE_UNIVERSE, sk->sk_protocol,
 				   flow_flags,
-				   faddr, saddr, dport, inet->inet_sport);
+				   faddr, saddr, dport, inet->inet_sport,
+				   sock_i_uid(sk));
 
 		security_sk_classify_flow(sk, flowi4_to_flowi(fl4));
 		rt = ip_route_output_flow(net, fl4, sk);

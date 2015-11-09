@@ -28,6 +28,7 @@ endif
 
 KBUILD_CFLAGS	+= -mgeneral-regs-only $(lseinstr)
 KBUILD_AFLAGS	+= $(lseinstr)
+KBUILD_CFLAGS	+= -fno-pic
 
 ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
 KBUILD_CPPFLAGS	+= -mbig-endian
