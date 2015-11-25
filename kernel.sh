@@ -21,7 +21,7 @@ AK_VER="$BASE_AK_VER$VER"
 
 # Vars
 
-export CROSS_COMPILE=${HOME}/new/arm-eabi-4.9/bin/arm-eabi-
+export CROSS_COMPILE=${HOME}/new/arm-eabi-5.2/bin/arm-eabi-
 export ARCH=arm
 export SUBARCH=arm
 export KBUILD_BUILD_USER=jgcaap
@@ -129,4 +129,4 @@ DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
-mv ~/new/out/newKernel-CM12-.zip /www/devs/jgcaap/oneplus/kernel/newKernel-CM13.0-3.00.zip
+mv ~/new/out/newKernel-CM12-.zip /www/devs/jgcaap/oneplus/kernel/newKernel-CM13.0-3.02.zip
