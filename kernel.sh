@@ -122,11 +122,11 @@ done
 echo -e "${green}"
 echo "-------------------"
 echo "Build Completed in:"
-echo "-------------------"
+oecho "-------------------"
 echo -e "${restore}"
 
 DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
-mv ~/new/out/newKernel-CM12-.zip /www/devs/jgcaap/oneplus/kernel/newKernel-CM12.1-2.70.zip
+mv ~/new/out/newKernel-CM12-.zip /www/devs/jgcaap/oneplus/kernel/newKernel-CM13.0-3.00.zip
