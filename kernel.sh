@@ -33,7 +33,7 @@ REPACK_DIR="${HOME}/new/anykernel"
 PATCH_DIR="${HOME}/new/anykernel"
 MODULES_DIR="${HOME}/new/modules"
 ZIP_MOVE="${HOME}/new/out"
-ZIMAGE_DIR="${HOME}/new/kernel/arch/arm/boot"
+ZIMAGE_DIR="${HOME}/new/msm8974/arch/arm/boot"
 
 # Functions
 function clean_all {
@@ -59,7 +59,7 @@ function make_modules {
 }
 
 function make_dtb {
-		dtbToolCM -2 -o /home/jgcaap/new/anykernel/dtb -s 2048 -p /home/jgcaap/new/kernel/scripts/dtc/ /home/jgcaap/new/kernel/arch/arm/boot/
+		dtbToolCM -2 -o /home/jgcaap/new/anykernel/dtb -s 2048 -p /home/jgcaap/new/msm8974/scripts/dtc/ /home/jgcaap/new/msm8974/arch/arm/boot/
 }
 
 function make_zip {
@@ -129,4 +129,4 @@ DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
-mv ~/new/out/newKernel-CM12-.zip /www/devs/jgcaap/oneplus/kernel/newKernel-CM13.0-3.20.zip
+mv ~/new/out/newKernel-CM12-.zip /www/devs/jgcaap/oneplus/kernel/newKernel-CM13.0-3.21.zip
