@@ -2249,7 +2249,7 @@ limSendAssocReqMgmtFrame(tpAniSirGlobal   pMac,
     tDot11fAssocRequest *pFrm;
     tANI_U16            caps;
     tANI_U8            *pFrame;
-    tSirRetStatus       nSirStatus = eSIR_FAILURE;
+    tSirRetStatus       nSirStatus;
     tLimMlmAssocCnf     mlmAssocCnf;
     tANI_U32            nPayload, nStatus;
     tANI_U8             fQosEnabled, fWmeEnabled, fWsmEnabled;
@@ -2293,12 +2293,9 @@ limSendAssocReqMgmtFrame(tpAniSirGlobal   pMac,
     vos_mem_set( ( tANI_U8* )pFrm, sizeof( tDot11fAssocRequest ), 0 );
 
     vos_mem_set(( tANI_U8* )&extractedExtCap, sizeof( tDot11fIEExtCap ), 0);
-    if (psessionEntry->is_ext_caps_present)
-    {
-        nSirStatus = limStripOffExtCapIEAndUpdateStruct(pMac, pAddIE,
+    nSirStatus = limStripOffExtCapIEAndUpdateStruct(pMac, pAddIE,
                                   &nAddIELen,
                                   &extractedExtCap );
-    }
     if(eSIR_SUCCESS != nSirStatus )
     {
         extractedExtCapFlag = eANI_BOOLEAN_FALSE;
@@ -2491,8 +2488,7 @@ limSendAssocReqMgmtFrame(tpAniSirGlobal   pMac,
 
     }
 #endif
-    if (psessionEntry->is_ext_caps_present)
-        PopulateDot11fExtCap( pMac, &pFrm->ExtCap, psessionEntry);
+    PopulateDot11fExtCap( pMac, &pFrm->ExtCap, psessionEntry);
 
 #if defined WLAN_FEATURE_VOWIFI_11R
     if (psessionEntry->pLimJoinReq->is11Rconnection)
@@ -2973,8 +2969,7 @@ limSendReassocReqWithFTIEsMgmtFrame(tpAniSirGlobal     pMac,
 
     }
 #endif
-    if (psessionEntry->is_ext_caps_present)
-        PopulateDot11fExtCap( pMac, &frm.ExtCap, psessionEntry);
+    PopulateDot11fExtCap( pMac, &frm.ExtCap, psessionEntry);
 
     nStatus = dot11fGetPackedReAssocRequestSize( pMac, &frm, &nPayload );
     if ( DOT11F_FAILED( nStatus ) )
@@ -3446,8 +3441,7 @@ limSendReassocReqMgmtFrame(tpAniSirGlobal     pMac,
         limLog( pMac, LOG1, FL("Populate VHT IEs in Re-Assoc Request"));
         PopulateDot11fVHTCaps( pMac, &frm.VHTCaps,
                      psessionEntry->currentOperChannel, eSIR_FALSE );
-        if (psessionEntry->is_ext_caps_present)
-            PopulateDot11fExtCap( pMac, &frm.ExtCap, psessionEntry);
+        PopulateDot11fExtCap( pMac, &frm.ExtCap, psessionEntry);
     }
 #endif
 

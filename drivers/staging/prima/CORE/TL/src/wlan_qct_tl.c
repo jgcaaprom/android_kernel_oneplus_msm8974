@@ -7107,7 +7107,7 @@ WLANTL_TxThreadDebugHandler
           "TDLS Peer Count: %d", pTLCb->ucTdlsPeerCount));
 #endif
 
-   TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+   TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
           "++++++++++++++++++++Registerd Client Information++++++++++"));
 
    for ( i =0; i<WLAN_MAX_STA_COUNT; i++ )
@@ -7118,49 +7118,48 @@ WLANTL_TxThreadDebugHandler
                 continue;
         }
 
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "######################STA Index: %d ############################",i));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO, "WLAN_STADescType:"));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR, "WLAN_STADescType:"));
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "STAId: %d\t STA MAC Address: %pM", pClientSTA->wSTADesc.ucSTAId,
               pClientSTA->wSTADesc.vSTAMACAddress.bytes));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "STA Type: %d\tProtectedFrame: %d",
               pClientSTA->wSTADesc.wSTAType, pClientSTA->wSTADesc.ucProtectedFrame));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
                "QoS: %d\tRxFrameTrans: %d\tTxFrameTrans: %d",
                pClientSTA->wSTADesc.ucQosEnabled, pClientSTA->wSTADesc.ucSwFrameRXXlation,
                pClientSTA->wSTADesc.ucSwFrameTXXlation));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "ucUcastSig: %d\tucBcastSig: %d", pClientSTA->wSTADesc.ucUcastSig,
               pClientSTA->wSTADesc.ucBcastSig));
 
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "ClientIndex: %d\t Exists: %d", i, pClientSTA->ucExists));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "TL State: %d\t TL Priority: %d", pClientSTA->tlState,
               pClientSTA->tlPri));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "ucTxSuspended: %d\tucPktPending: %d", pClientSTA->ucTxSuspended,
               pClientSTA->ucPktPending));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "ucEAPOLPktPending: %d\tucNoMoreData: %d",
               pClientSTA->ucEapolPktPending, pClientSTA->ucNoMoreData));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
                "enableCaching: %d\t fcStaTxDisabled: %d", pClientSTA->enableCaching,
                pClientSTA->fcStaTxDisabled));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
                "ucCurrentAC: %d\tucServicedAC: %d", pClientSTA->ucCurrentAC,
                pClientSTA->ucServicedAC));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "TID: %d\tautTxCount[0]: %d\tauRxCount[0]: %d",0, pClientSTA->auTxCount[0],
               pClientSTA->auRxCount[0]));
-        TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,
+        TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
               "aucAcMask[0]: %d\taucAcMask[1]: %d\taucAcMask[2]: %d\taucAcMask[3]: %d\t",
               pClientSTA->aucACMask[0], pClientSTA->aucACMask[1],
               pClientSTA->aucACMask[2], pClientSTA->aucACMask[3]));
         TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
-
                "ucCurrentWeight: %d", pClientSTA->ucCurrentWeight));
 
         if( WLAN_STA_SOFTAP == pClientSTA->wSTADesc.wSTAType)
