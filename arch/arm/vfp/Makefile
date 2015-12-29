@@ -7,7 +7,8 @@
 # ccflags-y := -DDEBUG
 # asflags-y := -DDEBUG
 
-KBUILD_AFLAGS	:=$(KBUILD_AFLAGS:-mhard-float=-Wa,-mfpu=neon-vfpv4 -mfloat-abi=hard)
+KBUILD_AFLAGS	:=$(KBUILD_AFLAGS:-msoft-float=-Wa,-mfpu=neon-vfpv4 -mfloat-abi=hard)
+KBUILD_AFLAGS   :=$(KBUILD_AFLAGS:-msoftfp-float=-Wa,-mfpu=neon-vfpv4 -mfloat-abi=hard)
 LDFLAGS		+=--no-warn-mismatch
 
 obj-y			+= vfp.o
