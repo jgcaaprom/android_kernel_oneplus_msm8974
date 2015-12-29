@@ -59,7 +59,7 @@ function make_modules {
 }
 
 function make_dtb {
-		dtbToolCM -2 -o /home/jgcaap/new/anykernel/dtb -s 2048 -p /home/jgcaap/new/msm8974/scripts/dtc/ /home/jgcaap/new/msm8974/arch/arm/boot/
+		/home/jorge/new/anykernel/tools/dtbToolCM -2 -o /home/jorge/new/anykernel/dtb -s 2048 -p /home/jorge/new/msm8974/scripts/dtc/ /home/jorge/new/msm8974/arch/arm/boot/
 }
 
 function make_zip {
@@ -129,5 +129,5 @@ DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
-mv ~/new/out/newKernel-CM12-.zip ~/files/kernel/newKernel-CM13.0-3.47.zip
+mv ~/new/out/newKernel-CM12-.zip ~/files/kernel/newKernel-CM13.0-3.48.zip
 /etc/script/md5.sh
