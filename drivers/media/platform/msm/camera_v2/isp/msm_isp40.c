@@ -84,7 +84,11 @@
 #define VFE40_CLK_IDX 1
 static struct msm_cam_clk_info msm_vfe40_clk_info[] = {
 	{"camss_top_ahb_clk", -1},
+#ifdef CONFIG_MACH_MSM8974_14001
+	{"vfe_clk_src", 465000000},
+#else
 	{"vfe_clk_src", 266670000},
+#endif
 	{"camss_vfe_vfe_clk", -1},
 	{"camss_csi_vfe_clk", -1},
 	{"iface_clk", -1},
@@ -368,8 +372,9 @@ static void msm_vfe40_process_reset_irq(struct vfe_device *vfe_dev,
 static void msm_vfe40_process_halt_irq(struct vfe_device *vfe_dev,
 	uint32_t irq_status0, uint32_t irq_status1)
 {
-	if (irq_status1 & (1 << 8))
-		complete(&vfe_dev->halt_complete);
+    if (irq_status1 & (1 << 8)) {
+        msm_camera_io_w(0x0, vfe_dev->vfe_base + 0x2C0);
+    }
 }
 
 static void msm_vfe40_process_camif_irq(struct vfe_device *vfe_dev,
@@ -1194,24 +1199,27 @@ static long msm_vfe40_axi_halt(struct vfe_device *vfe_dev,
 	uint32_t blocking)
 {
 	long rc = 0;
+	uint32_t axi_busy_flag = true;
 	/* Keep only restart mask and halt mask*/
 	msm_camera_io_w(BIT(31), vfe_dev->vfe_base + 0x28);
-	msm_camera_io_w(BIT(8), vfe_dev->vfe_base + 0x2C);
+	msm_camera_io_w(BIT(8),  vfe_dev->vfe_base + 0x2C);
 	/* Clear IRQ Status*/
 	msm_camera_io_w(0x7FFFFFFF, vfe_dev->vfe_base + 0x30);
 	msm_camera_io_w(0xFEFFFEFF, vfe_dev->vfe_base + 0x34);
 	msm_camera_io_w(0x1, vfe_dev->vfe_base + 0x24);
 	if (blocking) {
-		init_completion(&vfe_dev->halt_complete);
 		/* Halt AXI Bus Bridge */
 		msm_camera_io_w_mb(0x1, vfe_dev->vfe_base + 0x2C0);
 		atomic_set(&vfe_dev->error_info.overflow_state, NO_OVERFLOW);
-		rc = wait_for_completion_interruptible_timeout(
-			&vfe_dev->halt_complete, msecs_to_jiffies(500));
-	} else {
-		/* Halt AXI Bus Bridge */
-		msm_camera_io_w_mb(0x1, vfe_dev->vfe_base + 0x2C0);
+		while (axi_busy_flag) {
+			if (msm_camera_io_r(
+				vfe_dev->vfe_base + 0x2E4) & 0x1)
+				axi_busy_flag = false;
+		}
 	}
+        else {
+	        msm_camera_io_w_mb(0x1, vfe_dev->vfe_base + 0x2C0);
+        }
 	return rc;
 }
 
