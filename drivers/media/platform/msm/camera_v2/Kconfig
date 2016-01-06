@@ -266,3 +266,9 @@ config MSM_CAMERA_LED_CCI
 	---help---
 	  led flash driver for third party driver IC
 
+config MSM_CAMERA_LED_PM
+	bool "led flash use pmic"
+	depends on MSMB_CAMERA
+	default n
+	---help---
+		led flash driver for third party driver IC

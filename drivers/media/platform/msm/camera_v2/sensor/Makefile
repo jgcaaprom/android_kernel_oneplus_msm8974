@@ -24,3 +24,14 @@ endif
 obj-$(CONFIG_MT9M114) += mt9m114.o
 obj-$(CONFIG_SP1628) += sp1628.o
 obj-$(CONFIG_GC0339) += gc0339.o
+#added by oppo start
+#obj-$(CONFIG_IMX214) += imx214.o
+obj-$(CONFIG_OV16825) += ov16825.o
+
+#added by oppo end
+#obj-$(CONFIG_OV5648) += ov5648.o
+#del by oppo start
+#obj-$(CONFIG_MT9M114) += mt9m114.o
+#obj-$(CONFIG_SP1628) += sp1628.o
+#obj-$(CONFIG_GC0339) += gc0339.o
+#del by oppo end
