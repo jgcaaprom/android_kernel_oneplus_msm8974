@@ -21,7 +21,7 @@ AK_VER="$BASE_AK_VER$VER"
 
 # Vars
 
-export CROSS_COMPILE=${HOME}/new/arm-eabi-4.9/bin/arm-eabi-
+export CROSS_COMPILE=${HOME}/new/arm-eabi-4.9a15/bin/arm-eabi-
 export ARCH=arm
 export SUBARCH=arm
 export KBUILD_BUILD_USER=jgcaap
@@ -129,5 +129,5 @@ DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
-mv ~/new/out/newKernel-CM12-.zip ~/files/kernel/newKernel-CM13.0-3.50.zip
+mv ~/new/out/newKernel-CM12-.zip ~/files/kernel/newKernel-CM13.0-3.55.zip
 /etc/script/md5.sh
