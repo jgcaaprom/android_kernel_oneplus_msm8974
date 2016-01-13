@@ -12,7 +12,7 @@ clear
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
 KERNEL="zImage"
 DTBIMAGE="dtb"
-DEFCONFIG="cyanogenmod_bacon_defconfig"
+DEFCONFIG="newkernel_bacon_defconfig"
 
 # Kernel Details
 BASE_AK_VER="0.1"
@@ -129,5 +129,5 @@ DATE_END=$(date +"%s")
 DIFF=$(($DATE_END - $DATE_START))
 echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
-mv ~/new/out/newKernel-CM12-.zip ~/files/kernel/newKernel-CM13.0-3.55.zip
-/etc/script/md5.sh
+# mv ~/new/out/newKernel-CM12-.zip ~/files/kernel/newKernel-CM13.0-3.55.zip
+# /etc/script/md5.sh
