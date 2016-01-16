@@ -273,9 +273,9 @@
  * Configuration information
  */
 #define INPUT_POOL_SHIFT	12
-#define INPUT_POOL_WORDS	(1 << (INPUT_POOL_SHIFT-5))
+#define INPUT_POOL_WORDS	128
 #define OUTPUT_POOL_SHIFT	10
-#define OUTPUT_POOL_WORDS	(1 << (OUTPUT_POOL_SHIFT-5))
+#define OUTPUT_POOL_WORDS	32
 #define SEC_XFER_SIZE		512
 #define EXTRACT_SIZE		10
 
